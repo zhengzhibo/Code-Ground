@@ -1,0 +1,30 @@
+{
+  "name": "codeground",
+  "version": "0.0.0",
+  "private": true,
+  "nodemonConfig": {
+    "ignore": [
+      "node_modules/*",
+      "*.jade",
+      "*.json"
+    ],
+    "delay": "1000"
+  },
+  "scripts": {
+    "start": "node app",
+    "debug": "set DEBUG=true&& nodemon --exec npm start"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "express": "~4.16.0",
+    "http-errors": "~1.6.2",
+    "jade": "~1.11.0",
+    "lowdb": "^1.0.0",
+    "morgan": "~1.9.0",
+    "shortid": "^2.2.14"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.10"
+  }
+}
