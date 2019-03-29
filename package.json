@@ -5,21 +5,23 @@
   "nodemonConfig": {
     "ignore": [
       "node_modules/*",
-      "*.jade",
-      "*.json"
+      "views/*",
+      "*.json",
+      "public/*"
     ],
     "delay": "1000"
   },
   "scripts": {
     "start": "node app",
-    "debug": "set DEBUG=true&& nodemon --exec npm start"
+    "debug": "nodemon app"
   },
   "dependencies": {
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "express": "~4.16.0",
+    "express-handlebars": "^3.0.2",
+    "express-session": "^1.15.6",
     "http-errors": "~1.6.2",
-    "jade": "~1.11.0",
     "lowdb": "^1.0.0",
     "morgan": "~1.9.0",
     "shortid": "^2.2.14"
