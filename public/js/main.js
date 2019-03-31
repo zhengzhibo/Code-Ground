@@ -1,28 +1,46 @@
-// require.config({ paths: { 'vs': 'monaco-editor/min/vs' }});
-// require(['vs/editor/editor.main'], function() {
-//     var editor = monaco.editor.create(document.getElementById('container'), {
-//         value: [
-//             'function x() {',
-//             '\tconsole.log("Hello world!");',
-//             '}'
-//         ].join('\n'),
-//         language: 'javascript'
-//     });
-// });
-
-Split(["#a", "#b"], {
-  gutterSize: 8,
+Split(["#left-container", "#right-container"], {
+  gutterSize: 2,
   cursor: "col-resize"
 });
-Split(["#c", "#d"], {
+Split(["#html-container", "#js-container"], {
   direction: "vertical",
-  sizes: [25, 75],
-  gutterSize: 8,
+  sizes: [50, 50],
+  gutterSize: 2,
   cursor: "row-resize"
 });
-Split(["#e", "#f"], {
+Split(["#css-container", "#preview-container"], {
   direction: "vertical",
-  sizes: [25, 75],
-  gutterSize: 8,
+  sizes: [50, 50],
+  gutterSize: 2,
   cursor: "row-resize"
+});
+
+require.config({ paths: { vs: "monaco-editor/min/vs" } });
+require.config({
+  'vs/nls' : {
+    availableLanguages: {
+      '*': 'de'
+    }
+  }
+});
+
+require(["vs/editor/editor.main"], function() {
+  var htmlEditor = monaco.editor.create(document.getElementById("html-container"), {
+    value: "",
+    language: "html",
+    theme: "vs-dark",
+    minimap: {enabled : false}
+  });
+  var jsEditor = monaco.editor.create(document.getElementById("js-container"), {
+    value: "",
+    theme: "vs-dark",
+    language: "javascript",
+    minimap: {enabled : false}
+  });
+  var cssEditor = monaco.editor.create(document.getElementById("css-container"), {
+    value: "",
+    theme: "vs-dark",
+    language: "css",
+    minimap: {enabled : false}
+  });
 });
