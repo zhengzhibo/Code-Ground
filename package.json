@@ -9,6 +9,7 @@
       "*.json",
       "public/*"
     ],
+    "nodeArgs": ["--inspect"],
     "delay": "1000"
   },
   "scripts": {
@@ -16,6 +17,7 @@
     "debug": "nodemon app"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.9",
     "express": "~4.16.0",
