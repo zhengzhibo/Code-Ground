@@ -1,16 +1,29 @@
-#header {
-  height: 60px;
-  width: 100vw;
-  background: #1c2128;
+html {
+  overflow-y: auto;
+}
+
+.navbar {
+  background: #1c2128 !important;
+}
+
+@media screen and (max-width: 1087px) {
+  .navbar-menu.is-active {
+    position: absolute;
+    width: 100vw;
+  }
+}
+
+.navbar .navbar-item span.icon {
+  margin-right: 0.3rem;
+    font-size: 14px;
 }
 
 .logo {
-  width: 40px;
-  margin: 10px 0 10px 10px;
+  width: 30px;
 }
 
 #editor {
-  height: calc(100vh - 60px);
+  height: calc(100vh - 52px);
 }
 
 .split {
