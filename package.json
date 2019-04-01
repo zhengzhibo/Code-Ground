@@ -9,7 +9,9 @@
       "*.json",
       "public/*"
     ],
-    "nodeArgs": ["--inspect"],
+    "nodeArgs": [
+      "--inspect"
+    ],
     "delay": "1000"
   },
   "scripts": {
