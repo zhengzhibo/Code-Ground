@@ -1,0 +1,67 @@
+html {
+  overflow-y: auto;
+}
+
+.navbar {
+  background: #1c2128 !important;
+}
+
+@media screen and (max-width: 1087px) {
+  .navbar-menu.is-active {
+    position: absolute;
+    width: 100vw;
+  }
+}
+
+.navbar .navbar-item span.icon {
+  margin-right: 0.3rem;
+    font-size: 14px;
+}
+
+.logo {
+  width: 30px;
+}
+
+#editor {
+  height: calc(100vh - 52px);
+}
+
+#preview-form {
+  display: none;
+}
+
+#preview-iframe {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+.split {
+  box-sizing: border-box;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.editor-block, .monaco-editor-background{
+  background-color: #20262e;
+  overflow: hidden;
+}
+
+.gutter {
+  background-color: #2d333b;
+  background-repeat: no-repeat;
+  background-position: 50%;
+}
+
+.gutter.gutter-vertical {
+  cursor: row-resize;
+}
+
+.gutter.gutter-horizontal {
+  cursor: col-resize;
+}
+.split.split-horizontal,
+.gutter.gutter-horizontal {
+  height: 100%;
+  float: left;
+}

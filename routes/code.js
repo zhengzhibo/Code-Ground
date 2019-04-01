@@ -3,6 +3,11 @@ var shortid = require('shortid');
 
 var router = express.Router();
 
+router.post('/preview', (req, res) => {
+  let {js, css, html} = req.body;
+  res.send(`<html><script>${js}</script><style>${css}</style><body>${html}</body></html>`)
+});
+
 router.post('/', (req, res) => {
   db.get('codes')
   .push(req.body)
