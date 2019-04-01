@@ -24,24 +24,40 @@ require.config({
   }
 });
 
+var editor = {
+  login: function() {
+    window.open('/user/login');
+  },
+  run: function() {
+    document.getElementsByName('js')[0].value = editor.jsEditor.getValue();
+    document.getElementsByName('css')[0].value = editor.cssEditor.getValue();
+    document.getElementsByName('html')[0].value = editor.htmlEditor.getValue();
+
+    document.getElementById('preview-form').submit();
+  }
+}
+
 require(["vs/editor/editor.main"], function() {
-  var htmlEditor = monaco.editor.create(document.getElementById("html-container"), {
+  editor.htmlEditor = monaco.editor.create(document.getElementById("html-container"), {
     value: "",
     language: "html",
     theme: "vs-dark",
-    minimap: {enabled : false}
+    minimap: {enabled : false},
+    contextmenu: false
   });
-  var jsEditor = monaco.editor.create(document.getElementById("js-container"), {
+  editor.jsEditor = monaco.editor.create(document.getElementById("js-container"), {
     value: "",
     theme: "vs-dark",
     language: "javascript",
-    minimap: {enabled : false}
+    minimap: {enabled : false},
+    contextmenu: false
   });
-  var cssEditor = monaco.editor.create(document.getElementById("css-container"), {
+  editor.cssEditor = monaco.editor.create(document.getElementById("css-container"), {
     value: "",
     theme: "vs-dark",
     language: "css",
-    minimap: {enabled : false}
+    minimap: {enabled : false},
+    contextmenu: false
   });
 });
 
@@ -75,9 +91,8 @@ var clickables = document.querySelectorAll('[do]')
 for (var i = 0; i < clickables.length; i++) {
   var clickable = clickables[i];
   clickable.addEventListener('click', function() {
-    var doing = this.attributes.do.value;
-    if (doing = 'login') {
-      window.open('/user/login');
+    if (this.attributes.do.value) {
+      editor[this.attributes.do.value].call(this)
     }
   })
 }

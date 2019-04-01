@@ -3,15 +3,15 @@
     <a class="navbar-item" href="/">
       <img src="/img/logo.svg" width="35" >
     </a>
-    <a class="navbar-item">
-      <span class="icon iconfont icon-start" do="run"></span> Run
+    <a class="navbar-item" do="run">
+      <span class="icon iconfont icon-start" ></span> Run
     </a>
 
-    <a class="navbar-item">
-      <span class="icon iconfont icon-save" do="run"></span> Save
+    <a class="navbar-item" do="run">
+      <span class="icon iconfont icon-save" ></span> Save
     </a>
-    <a class="navbar-item">
-      <span class="icon iconfont icon-setting" do="settings"></span> Settings
+    <a class="navbar-item" do="settings">
+      <span class="icon iconfont icon-setting"></span> Settings
     </a>
     <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbar-burger-item">
       <span aria-hidden="true"></span>
@@ -44,7 +44,7 @@
     <div class="navbar-end">
       <div class="navbar-item">
         <div class="buttons">
-          <a class="button is-light" do="login">
+          <a class="button is-primary" do="login">
             Log in
           </a>
         </div>
@@ -59,6 +59,13 @@
   </div>
   <div id="right-container" class="split split-horizontal">
     <div id="css-container" class="split editor-block"></div>
-    <div id="preview-container" class="split editor-block"></div>
+    <div id="preview-container" class="split editor-block">
+      <iframe class="preview-iframe" name="preview-iframe" src="" frameborder="0"></iframe>
+    </div>
   </div>
 </div>
+<form id="preview-form" action="/code/preview" method="post" target="preview-iframe">
+  <input type="text" name="html">
+  <input type="text" name="css">
+  <input type="text" name="js">
+</form>
