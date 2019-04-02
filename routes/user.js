@@ -5,15 +5,22 @@ const config = require('../config');
 
 const axios = require('axios');
 
-/* GET users listing. */
 router.get('/login', function(req, res, next) {
   var userInfo = req.session.userInfo;
-
+  console.log(userInfo);
   if (!userInfo) {
     res.redirect(`${config.gitlab.host}/oauth/authorize?client_id=${config.gitlab.appId}&redirect_uri=${config.gitlab.redirectUri}&response_type=code&scope=read_user`);
   } else {
     res.render('logged')
   }
+});
+
+router.get('/logout', function(req, res, next) {
+  var userInfo = req.session.userInfo;
+  if (userInfo) {
+    req.session.userInfo = null;
+  }
+  res.send({success: true});
 });
 
 router.get('/gitlab_callback', function(req, res, next) {
@@ -22,7 +29,7 @@ router.get('/gitlab_callback', function(req, res, next) {
     res.send(req.query);
     return
   }
-  
+
   let {code} = req.query;
 
   axios.post(config.gitlab.host + '/oauth/token', {
@@ -41,7 +48,7 @@ router.get('/gitlab_callback', function(req, res, next) {
         }
       })
       .then(function(userInfo) {
-        req.session.userInfo = userInfo.data;
+        req.session.userInfo = {data: userInfo.data, meta: {type: 'gitlab', uid: 'gitlab' + userInfo.data.id}};
         res.redirect('/user/login')
       })
       .catch(function(error) {
