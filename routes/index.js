@@ -5,7 +5,7 @@ var shortid = require('shortid');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  var data = {title: 'Code Ground'};
+  var data = {title: 'Code Ground', userInfo: req.session.userInfo};
   res.render('index', data);
 });
 
