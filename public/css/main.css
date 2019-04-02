@@ -15,11 +15,33 @@ html {
 
 .navbar .navbar-item span.icon {
   margin-right: 0.3rem;
-    font-size: 14px;
+  font-size: 14px;
 }
 
 .logo {
   width: 30px;
+}
+
+.logo:hover .red{
+  animation: logo-rotate 1s infinite;
+  transform-origin: 425px 416.5px;
+}
+
+@keyframes logo-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.tanuki-logo {
+  margin-left: 0.5rem;
+}
+
+.avatar img {
+  max-height: 32px;
 }
 
 #editor {
@@ -42,7 +64,7 @@ html {
   overflow-x: hidden;
 }
 
-.editor-block, .monaco-editor-background{
+.editor-block, .monaco-editor-background {
   background-color: #20262e;
   overflow: hidden;
 }
@@ -60,8 +82,12 @@ html {
 .gutter.gutter-horizontal {
   cursor: col-resize;
 }
-.split.split-horizontal,
-.gutter.gutter-horizontal {
+
+.split.split-horizontal, .gutter.gutter-horizontal {
   height: 100%;
   float: left;
+}
+
+.modal-card-foot, .modal-card-head, .modal-card-body {
+  padding: 10px 20px;
 }
