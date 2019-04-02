@@ -1,23 +1,23 @@
 Split(["#left-container", "#right-container"], {
-  gutterSize: 2,
+  gutterSize: 3,
   cursor: "col-resize"
 });
 Split(["#html-container", "#js-container"], {
   direction: "vertical",
   sizes: [50, 50],
-  gutterSize: 2,
+  gutterSize: 3,
   cursor: "row-resize"
 });
 Split(["#css-container", "#preview-container"], {
   direction: "vertical",
   sizes: [50, 50],
-  gutterSize: 2,
+  gutterSize: 3,
   cursor: "row-resize"
 });
 
 require.config({ paths: { vs: "monaco-editor/min/vs" } });
 require.config({
-  'vs/nls' : {
+  'vs/nls': {
     availableLanguages: {
       '*': 'de'
     }
@@ -25,38 +25,66 @@ require.config({
 });
 
 var editor = {
-  login: function() {
-    window.open('/user/login');
+  signin: function () {
+    PopupCenter('/user/login', '', 1000, 700);
   },
-  run: function() {
+  signout: function () {
+    axios.get('/user/logout')
+    .then(function(res) {
+      window.location.reload();
+    })
+    .catch(function(error) {
+      console.log(error)
+    })
+  },
+  run: function () {
     document.getElementsByName('js')[0].value = editor.jsEditor.getValue();
     document.getElementsByName('css')[0].value = editor.cssEditor.getValue();
     document.getElementsByName('html')[0].value = editor.htmlEditor.getValue();
-
     document.getElementById('preview-form').submit();
+  },
+  settings: function() {
+    document.getElementById('settings-modal').classList.add('is-active')
   }
 }
 
-require(["vs/editor/editor.main"], function() {
+function PopupCenter(url, title, w, h) {
+  // Fixes dual-screen position                         Most browsers      Firefox
+  var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : window.screenX;
+  var dualScreenTop = window.screenTop != undefined ? window.screenTop : window.screenY;
+
+  var width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;
+  var height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;
+
+  var systemZoom = width / window.screen.availWidth;
+  var left = (width - w) / 2 / systemZoom + dualScreenLeft
+  var top = (height - h) / 2 / systemZoom + dualScreenTop
+  var newWindow = window.open(url, title, 'scrollbars=yes, width=' + w / systemZoom + ', height=' + h / systemZoom + ', top=' + top + ', left=' + left);
+
+  // Puts focus on the newWindow
+  if (window.focus) newWindow.focus();
+}
+
+require(["vs/editor/editor.main"], function () {
   editor.htmlEditor = monaco.editor.create(document.getElementById("html-container"), {
     value: "",
     language: "html",
     theme: "vs-dark",
-    minimap: {enabled : false},
+    minimap: { enabled: false },
     contextmenu: false
   });
   editor.jsEditor = monaco.editor.create(document.getElementById("js-container"), {
     value: "",
     theme: "vs-dark",
     language: "javascript",
-    minimap: {enabled : false},
+    minimap: { enabled: false },
     contextmenu: false
   });
   editor.cssEditor = monaco.editor.create(document.getElementById("css-container"), {
     value: "",
     theme: "vs-dark",
     language: "css",
-    minimap: {enabled : false},
+    minimap: { enabled: false },
     contextmenu: false
   });
 });
@@ -70,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if ($navbarBurgers.length > 0) {
 
     // Add a click event on each of them
-    $navbarBurgers.forEach( el => {
+    $navbarBurgers.forEach(el => {
       el.addEventListener('click', () => {
 
         // Get the target from the "data-target" attribute
@@ -90,7 +118,7 @@ var clickables = document.querySelectorAll('[do]')
 
 for (var i = 0; i < clickables.length; i++) {
   var clickable = clickables[i];
-  clickable.addEventListener('click', function() {
+  clickable.addEventListener('click', function () {
     if (this.attributes.do.value) {
       editor[this.attributes.do.value].call(this)
     }
