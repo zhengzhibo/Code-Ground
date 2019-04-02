@@ -17,8 +17,14 @@ router.get('/login', function(req, res, next) {
 });
 
 router.get('/gitlab_callback', function(req, res, next) {
-  let {code} = req.query;
+
+  if (req.query.error) {
+    res.send(req.query);
+    return
+  }
   
+  let {code} = req.query;
+
   axios.post(config.gitlab.host + '/oauth/token', {
     client_id: config.gitlab.appId,
     client_secret: config.gitlab.secret,
@@ -39,7 +45,7 @@ router.get('/gitlab_callback', function(req, res, next) {
         res.redirect('/user/login')
       })
       .catch(function(error) {
-        res.status(500).send({data: error.message});
+        res.status(500).send(JSON.stringify(error));
       })
     }
   })
