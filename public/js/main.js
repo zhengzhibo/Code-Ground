@@ -44,9 +44,37 @@ var editor = {
     document.getElementById('preview-form').submit();
   },
   settings: function() {
+    rootEl.classList.add('is-clipped');
     document.getElementById('settings-modal').classList.add('is-active')
   }
 }
+
+var rootEl = document.documentElement;
+var $modals = getAll('.modal');
+var $modalCloses = getAll('.modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button, .modal-close-button');
+
+if ($modalCloses.length > 0) {
+  $modalCloses.forEach(function ($el) {
+    $el.addEventListener('click', function () {
+      closeModals();
+    });
+  });
+}
+
+function closeModals() {
+  rootEl.classList.remove('is-clipped');
+  $modals.forEach(function ($el) {
+    $el.classList.remove('is-active');
+  });
+}
+
+document.addEventListener('keydown', function (event) {
+  var e = event || window.event;
+  if (e.keyCode === 27) {
+    closeModals();
+    closeDropdowns();
+  }
+});
 
 function PopupCenter(url, title, w, h) {
   // Fixes dual-screen position                         Most browsers      Firefox
@@ -91,30 +119,20 @@ require(["vs/editor/editor.main"], function () {
 
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Get all "navbar-burger" elements
-  const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0);
-
-  // Check if there are any navbar burgers
+  const $navbarBurgers = getAll('.navbar-burger');
   if ($navbarBurgers.length > 0) {
-
-    // Add a click event on each of them
     $navbarBurgers.forEach(el => {
       el.addEventListener('click', () => {
-
-        // Get the target from the "data-target" attribute
         const target = el.dataset.target;
         const $target = document.getElementById(target);
-
-        // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
         el.classList.toggle('is-active');
         $target.classList.toggle('is-active');
-
       });
     });
   }
 });
 
-var clickables = document.querySelectorAll('[do]')
+var clickables = getAll('[do]')
 
 for (var i = 0; i < clickables.length; i++) {
   var clickable = clickables[i];
@@ -123,4 +141,9 @@ for (var i = 0; i < clickables.length; i++) {
       editor[this.attributes.do.value].call(this)
     }
   })
+}
+
+// utils
+function getAll(selector) {
+  return Array.prototype.slice.call(document.querySelectorAll(selector), 0);
 }
