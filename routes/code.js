@@ -42,7 +42,12 @@ router.get('/:id', function(req, res, next) {
   var id = req.params.id;
   let data = db.get('codes')
                .find({id}).value();
-  res.send(data);
+  if (data) {
+    res.send(data);
+  } else {
+    res.statusCode = 404;
+    res.send()
+  }
 });
 
 router.delete('/:id', function(req, res, next) {
