@@ -9,12 +9,18 @@ router.post('/preview', (req, res) => {
 });
 
 router.post('/', (req, res) => {
+  var code = {
+    ...req.body,
+    owner: req.cookies.userInfo ? req.cookies.userInfo.name : '',
+    dateOfCreate: new Date().getTime(),
+    id: shortid.generate()
+  };
+
   db.get('codes')
-  .push(req.body)
+  .push(code)
   .last()
-  .assign({id: shortid.generate()})
   .write()
-  .then(code => res.send(code))
+  .then(code => res.send(code));
 });
 
 router.put('/:id', (req, res) => {

@@ -43,6 +43,20 @@ var editor = {
     document.getElementsByName('html')[0].value = editor.htmlEditor.getValue();
     document.getElementById('preview-form').submit();
   },
+  save: function() {
+    debugger
+    axios.post('/code/', {
+      js: editor.jsEditor.getValue(),
+      css: editor.cssEditor.getValue(),
+      html: editor.htmlEditor.getValue(),
+    })
+    .then(function(res) {
+      window.location.replace('/code/' + res.data.id)
+    })
+    .catch(function(error) {
+      console.log(error)
+    })
+  },
   settings: function() {
     rootEl.classList.add('is-clipped');
     document.getElementById('settings-modal').classList.add('is-active')
