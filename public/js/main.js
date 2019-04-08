@@ -16,17 +16,10 @@ Split(["#css-container", "#preview-container"], {
 });
 
 require.config({ paths: { vs: "/monaco-editor/min/vs" } });
-require.config({
-  'vs/nls': {
-    availableLanguages: {
-      '*': 'de'
-    }
-  }
-});
 
 var editor = {
   signin: function () {
-    PopupCenter('/api/user/login', '', 1000, 700);
+    PopupCenter('/login', '', 1000, 700);
   },
   signout: function () {
     axios.get('/api/user/logout')
