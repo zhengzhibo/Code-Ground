@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const http = require('http');
 const config = require('../config');
 
 const axios = require('axios');
