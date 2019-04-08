@@ -21,9 +21,16 @@
     <a class="navbar-item" do="run">
       <span class="icon iconfont icon-start"></span> Run
     </a>
+    {{#if canSave}}
     <a class="navbar-item" do="save">
       <span class="icon iconfont icon-save"></span> Save
     </a>
+    {{/if}}
+    {{#if code.id}}
+    <a class="navbar-item" do="fork">
+      <span class="icon iconfont icon-copy"></span> Fork
+    </a>
+    {{/if}}
     <a class="navbar-item" do="settings">
       <span class="icon iconfont icon-setting"></span> Settings
     </a>
@@ -122,28 +129,20 @@
         <div class="field">
           <label class="label">Title</label>
           <div class="control">
-            <input class="input" type="text" placeholder="Code Title">
+            <input name="setting-title" class="input" type="text" placeholder="Code Title">
           </div>
         </div>
 
         <div class="field">
           <label class="label">Javascript Resources</label>
           <div class="control">
-            <textarea rows="3" class="textarea" placeholder="Javascript"></textarea>
+            <textarea rows="3" class="textarea" name="setting-jsLinks" placeholder="Javascript"></textarea>
           </div>
         </div>
         <div class="field">
           <label class="label">Css Resources</label>
           <div class="control">
-            <textarea rows="3" class="textarea" placeholder="Css"></textarea>
-          </div>
-        </div>
-        <div class="field is-grouped">
-          <div class="control">
-            <button class="button is-link modal-close-button">Submit</button>
-          </div>
-          <div class="control">
-            <button class="button is-text modal-close-button">Cancel</button>
+            <textarea rows="3" class="textarea" name="setting-cssLinks" placeholder="Css"></textarea>
           </div>
         </div>
       </div>
@@ -153,6 +152,9 @@
 </div>
 <form id="preview-form" action="/preview" method="post" target="preview-iframe">
   <input type="text" name="id" value="{{code.id}}">
+  <input type="text" name="title" value="{{code.title}}">
+  <textarea name="jsLinks">{{code.jsLinks}}</textarea>
+  <textarea name="cssLinks">{{code.cssLinks}}</textarea>
   <textarea name="html">{{code.html}}</textarea>
   <textarea name="css">{{code.css}}</textarea>
   <textarea name="js">{{code.js}}</textarea>
