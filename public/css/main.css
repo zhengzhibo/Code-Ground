@@ -22,7 +22,7 @@ html {
   width: 30px;
 }
 
-.logo:hover .red{
+.navbar-item:hover .logo .red{
   animation: logo-rotate 1s infinite;
   transform-origin: 425px 416.5px;
 }
