@@ -15,7 +15,7 @@ Split(["#css-container", "#preview-container"], {
   cursor: "row-resize"
 });
 
-require.config({ paths: { vs: "monaco-editor/min/vs" } });
+require.config({ paths: { vs: "/monaco-editor/min/vs" } });
 require.config({
   'vs/nls': {
     availableLanguages: {
@@ -26,16 +26,16 @@ require.config({
 
 var editor = {
   signin: function () {
-    PopupCenter('/user/login', '', 1000, 700);
+    PopupCenter('/api/user/login', '', 1000, 700);
   },
   signout: function () {
-    axios.get('/user/logout')
-    .then(function(res) {
-      window.location.reload();
-    })
-    .catch(function(error) {
-      console.log(error)
-    })
+    axios.get('/api/user/logout')
+      .then(function (res) {
+        window.location.reload();
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
   },
   run: function () {
     document.getElementsByName('js')[0].value = editor.jsEditor.getValue();
@@ -43,21 +43,23 @@ var editor = {
     document.getElementsByName('html')[0].value = editor.htmlEditor.getValue();
     document.getElementById('preview-form').submit();
   },
-  save: function() {
-    debugger
-    axios.post('/code/', {
+  save: function () {
+    axios.post('/api/code/', {
       js: editor.jsEditor.getValue(),
       css: editor.cssEditor.getValue(),
       html: editor.htmlEditor.getValue(),
     })
-    .then(function(res) {
-      window.location.replace('/code/' + res.data.id)
-    })
-    .catch(function(error) {
-      console.log(error)
-    })
+      .then(function (res) {
+        toast('success!');
+        setTimeout(function() {
+          window.location.replace('/code/' + res.data.id)
+        }, 1000)
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
   },
-  settings: function() {
+  settings: function () {
     rootEl.classList.add('is-clipped');
     document.getElementById('settings-modal').classList.add('is-active')
   }
@@ -109,21 +111,21 @@ function PopupCenter(url, title, w, h) {
 
 require(["vs/editor/editor.main"], function () {
   editor.htmlEditor = monaco.editor.create(document.getElementById("html-container"), {
-    value: "",
+    value: document.getElementsByName('html')[0].value,
     language: "html",
     theme: "vs-dark",
     minimap: { enabled: false },
     contextmenu: false
   });
   editor.jsEditor = monaco.editor.create(document.getElementById("js-container"), {
-    value: "",
+    value: document.getElementsByName('js')[0].value,
     theme: "vs-dark",
     language: "javascript",
     minimap: { enabled: false },
     contextmenu: false
   });
   editor.cssEditor = monaco.editor.create(document.getElementById("css-container"), {
-    value: "",
+    value: document.getElementsByName('css')[0].value,
     theme: "vs-dark",
     language: "css",
     minimap: { enabled: false },
@@ -160,4 +162,18 @@ for (var i = 0; i < clickables.length; i++) {
 // utils
 function getAll(selector) {
   return Array.prototype.slice.call(document.querySelectorAll(selector), 0);
+}
+
+function toast(message, type) {
+  bulmaToast.toast({
+    message: message,
+    type: "is-" + (type || 'info'),
+    dismissible: true,
+    pauseOnHover: true,
+    position: 'top-center',
+    animate: {
+      in: 'fadeIn',
+      out: 'fadeOut'
+    }
+  });
 }

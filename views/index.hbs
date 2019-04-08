@@ -79,7 +79,7 @@
       {{^}}
       <div class="navbar-item">
         <div class="buttons">
-          <a class="button is-primary" do="signin">
+          <a class="button is-info" do="signin">
             Sign in with
             <svg width="20" height="20" class="tanuki-logo" viewBox="0 0 36 36">
               <path class="tanuki-shape tanuki-left-ear" fill="#e24329"
@@ -151,8 +151,9 @@
   </div>
   <button class="modal-close is-large" aria-label="close"></button>
 </div>
-<form id="preview-form" action="/code/preview" method="post" target="preview-iframe">
-  <input type="text" name="html">
-  <input type="text" name="css">
-  <input type="text" name="js">
+<form id="preview-form" action="/preview" method="post" target="preview-iframe">
+  <input type="text" name="id" value="{{code.id}}">
+  <input type="text" name="html" value="{{code.html}}">
+  <input type="text" name="css" value="{{code.css}}">
+  <input type="text" name="js" value="{{code.js}}">
 </form>
