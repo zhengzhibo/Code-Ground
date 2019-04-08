@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const config = require('../config');
+const common = require('../common');
 
 const axios = require('axios');
 
@@ -21,17 +21,17 @@ router.get('/gitlab_callback', function(req, res, next) {
 
   let {code} = req.query;
 
-  axios.post(config.gitlab.host + '/oauth/token', {
-    client_id: config.gitlab.appId,
-    client_secret: config.gitlab.secret,
+  axios.post(common.gitlab.host + '/oauth/token', {
+    client_id: common.gitlab.appId,
+    client_secret: common.gitlab.secret,
     code: code,
     grant_type: 'authorization_code',
-    redirect_uri: config.gitlab.redirectUri
+    redirect_uri: common.gitlab.redirectUri
   })
   .then(function (response) {
     if(response.data.access_token) {
       console.log(response.data.access_token)
-      axios.get(config.gitlab.host + '/api/v4/user', {
+      axios.get(common.gitlab.host + '/api/v4/user', {
         params: {
           access_token: response.data.access_token
         }
