@@ -1,11 +1,21 @@
 var express = require('express');
 var router = express.Router();
 var createError = require('http-errors');
+const config = require('../config');
 
 /* GET home page. */
 router.get('/', function(req, res) {
   var data = {title: 'Code Ground', userInfo: req.session.userInfo};
   res.render('index', data);
+});
+
+router.get('/login', function(req, res, next) {
+  var userInfo = req.session.userInfo;
+  if (!userInfo) {
+    res.redirect(`${config.gitlab.host}/oauth/authorize?client_id=${config.gitlab.appId}&redirect_uri=${config.gitlab.redirectUri}&response_type=code&scope=read_user`);
+  } else {
+    res.render('logged')
+  }
 });
 
 router.get('/code/:id', function(req, res, next) {

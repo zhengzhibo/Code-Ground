@@ -4,16 +4,6 @@ const config = require('../config');
 
 const axios = require('axios');
 
-router.get('/login', function(req, res, next) {
-  var userInfo = req.session.userInfo;
-  console.log(userInfo);
-  if (!userInfo) {
-    res.redirect(`${config.gitlab.host}/oauth/authorize?client_id=${config.gitlab.appId}&redirect_uri=${config.gitlab.redirectUri}&response_type=code&scope=read_user`);
-  } else {
-    res.render('logged')
-  }
-});
-
 router.get('/logout', function(req, res, next) {
   var userInfo = req.session.userInfo;
   if (userInfo) {
@@ -48,7 +38,7 @@ router.get('/gitlab_callback', function(req, res, next) {
       })
       .then(function(userInfo) {
         req.session.userInfo = {data: userInfo.data, meta: {type: 'gitlab', uid: 'gitlab' + userInfo.data.id}};
-        res.redirect('/user/login')
+        res.redirect('/login')
       })
       .catch(function(error) {
         res.status(500).send(JSON.stringify(error));
