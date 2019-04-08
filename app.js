@@ -16,11 +16,17 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 
-app.engine('hbs', exphbs({
+var hbs = exphbs.create({
   layoutsDir: 'views',
   defaultLayout: 'layout',
   extname: '.hbs'
-}));
+})
+
+hbs.handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
+  return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
+});
+
+app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 
 app.use(session({
