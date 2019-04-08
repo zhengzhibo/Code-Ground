@@ -52,7 +52,7 @@ html {
   display: none;
 }
 
-#preview-iframe {
+.preview-iframe {
   width: 100%;
   height: 100%;
   overflow: auto;
