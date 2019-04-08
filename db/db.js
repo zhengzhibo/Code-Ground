@@ -1,8 +1,8 @@
 const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileASync');
-const config = require('../config');
+const common = require('../common');
 
-const dburl = config.db;
+const dburl = common.db;
 const adapter = new FileSync(dburl);
 
 module.exports = low(adapter);

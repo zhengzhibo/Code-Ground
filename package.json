@@ -28,7 +28,7 @@
     "http-errors": "~1.6.2",
     "lowdb": "^1.0.0",
     "morgan": "~1.9.0",
-    "shortid": "^2.2.14"
+    "nanoid": "^2.0.1"
   },
   "devDependencies": {
     "nodemon": "^1.18.10"

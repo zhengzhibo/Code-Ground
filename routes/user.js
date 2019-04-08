@@ -1,45 +1,47 @@
 const express = require('express');
 const router = express.Router();
-const http = require('http');
-const config = require('../config');
+const common = require('../common');
 
 const axios = require('axios');
 
-/* GET users listing. */
-router.get('/login', function(req, res, next) {
+router.get('/logout', function(req, res, next) {
   var userInfo = req.session.userInfo;
-
-  if (!userInfo) {
-    res.redirect(`${config.gitlab.host}/oauth/authorize?client_id=${config.gitlab.appId}&redirect_uri=${config.gitlab.redirectUri}&response_type=code&scope=read_user`);
-  } else {
-    res.render('logged')
+  if (userInfo) {
+    req.session.userInfo = null;
   }
+  res.send({success: true});
 });
 
 router.get('/gitlab_callback', function(req, res, next) {
+
+  if (req.query.error) {
+    res.send(req.query);
+    return
+  }
+
   let {code} = req.query;
-  
-  axios.post(config.gitlab.host + '/oauth/token', {
-    client_id: config.gitlab.appId,
-    client_secret: config.gitlab.secret,
+
+  axios.post(common.gitlab.host + '/oauth/token', {
+    client_id: common.gitlab.appId,
+    client_secret: common.gitlab.secret,
     code: code,
     grant_type: 'authorization_code',
-    redirect_uri: config.gitlab.redirectUri
+    redirect_uri: common.gitlab.redirectUri
   })
   .then(function (response) {
     if(response.data.access_token) {
       console.log(response.data.access_token)
-      axios.get(config.gitlab.host + '/api/v4/user', {
+      axios.get(common.gitlab.host + '/api/v4/user', {
         params: {
           access_token: response.data.access_token
         }
       })
       .then(function(userInfo) {
-        req.session.userInfo = userInfo.data;
-        res.redirect('/user/login')
+        req.session.userInfo = {data: userInfo.data, meta: {type: 'gitlab', uid: 'gitlab' + userInfo.data.id}};
+        res.redirect('/login')
       })
       .catch(function(error) {
-        res.status(500).send({data: error.message});
+        res.status(500).send(JSON.stringify(error));
       })
     }
   })

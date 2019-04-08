@@ -15,11 +15,33 @@ html {
 
 .navbar .navbar-item span.icon {
   margin-right: 0.3rem;
-    font-size: 14px;
+  font-size: 14px;
 }
 
 .logo {
   width: 30px;
+}
+
+.navbar-item:hover .logo .red{
+  animation: logo-rotate 1s infinite;
+  transform-origin: 425px 416.5px;
+}
+
+@keyframes logo-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.tanuki-logo {
+  margin-left: 0.5rem;
+}
+
+.avatar img {
+  max-height: 32px;
 }
 
 #editor {
@@ -30,7 +52,7 @@ html {
   display: none;
 }
 
-#preview-iframe {
+.preview-iframe {
   width: 100%;
   height: 100%;
   overflow: auto;
@@ -42,7 +64,7 @@ html {
   overflow-x: hidden;
 }
 
-.editor-block, .monaco-editor-background{
+.editor-block, .monaco-editor-background {
   background-color: #20262e;
   overflow: hidden;
 }
@@ -60,8 +82,70 @@ html {
 .gutter.gutter-horizontal {
   cursor: col-resize;
 }
-.split.split-horizontal,
-.gutter.gutter-horizontal {
+
+.split.split-horizontal, .gutter.gutter-horizontal {
   height: 100%;
   float: left;
+}
+
+.modal-card-foot, .modal-card-head, .modal-card-body {
+  padding: 10px 20px;
+}
+
+/* amimation */
+.animated {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.fadeIn {
+  -webkit-animation-name: fadeIn;
+  animation-name: fadeIn;
+}
+
+@-webkit-keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+.fadeOut {
+  -webkit-animation-name: fadeOut;
+  animation-name: fadeOut;
 }

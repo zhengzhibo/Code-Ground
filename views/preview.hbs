@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title></title>
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style type="text/css">
+    body {
+      background: #fff;
+    }
+  </style>
+  
+  {{#each jsAry}}
+    <script src="{{{this}}}"></script>
+  {{/each}}
+  {{#each cssAry}}
+    <link rel="stylesheet" href="{{{this}}}">
+  {{/each}}
+  <style type="text/css">
+    {{{css}}}
+  </style>
+  <script type="text/javascript">
+    window.onload = function () {
+      {{{js}}}
+    }
+  </script>
+</head>
+
+<body>
+  {{{html}}}
+  <script>
+    {{!-- // tell the embed parent frame the height of the content
+    if (window.parent && window.parent.parent) {
+      window.parent.parent.postMessage(["resultsFrame", {
+        height: document.body.getBoundingClientRect().height,
+        slug: ""
+      }], "*")
+    }
+
+    // always overwrite window.name, in case users try to set it manually
+    window.name = "result" --}}
+  </script>
+</body>
+
+</html>

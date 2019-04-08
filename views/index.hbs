@@ -1,19 +1,41 @@
 <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
   <div class="navbar-brand">
     <a class="navbar-item" href="/">
-      <img src="/img/logo.svg" width="35" >
+      <svg class="logo" id="logo" data-name="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 557 558">
+        <defs>
+          <style>
+            .cls-1 {
+              fill: #0084ff
+            }
+          </style>
+        </defs>
+        <rect class="cls-1" x="-42.4" y="102.53" width="337.8" height="50" rx="25"
+          transform="rotate(-45 126.501 127.522)" />
+        <rect class="cls-1" x="260.6" y="102.53" width="337.8" height="50" rx="25"
+          transform="rotate(45 429.498 127.524)" />
+        <rect class="cls-1" x="-42.4" y="405.53" width="337.8" height="50" rx="25"
+          transform="rotate(45 126.5 430.528)" />
+        <rect class="red" x="303" y="404" width="250" height="50" rx="25" fill="#ff4f68" />
+      </svg>
     </a>
     <a class="navbar-item" do="run">
-      <span class="icon iconfont icon-start" ></span> Run
+      <span class="icon iconfont icon-start"></span> Run
     </a>
-
-    <a class="navbar-item" do="run">
-      <span class="icon iconfont icon-save" ></span> Save
+    {{#if canSave}}
+    <a class="navbar-item" do="save">
+      <span class="icon iconfont icon-save"></span> Save
     </a>
+    {{/if}}
+    {{#if code.id}}
+    <a class="navbar-item" do="fork">
+      <span class="icon iconfont icon-copy"></span> Fork
+    </a>
+    {{/if}}
     <a class="navbar-item" do="settings">
       <span class="icon iconfont icon-setting"></span> Settings
     </a>
-    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbar-burger-item">
+    <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
+      data-target="navbar-burger-item">
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
       <span aria-hidden="true"></span>
@@ -42,13 +64,48 @@
     </div>
 
     <div class="navbar-end">
-      <div class="navbar-item">
-        <div class="buttons">
-          <a class="button is-primary" do="login">
-            Log in
+      {{#if userInfo}}
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link is-arrowless">
+          <div class="image is-32x32 avatar">
+            <img class="is-rounded" src="{{userInfo.data.avatar_url}}" alt="avatar">
+          </div>
+        </a>
+        <div class="navbar-dropdown is-right">
+          <b class="navbar-item">{{userInfo.data.name}}</b>
+          <hr class="navbar-divider">
+          <a class="navbar-item">
+            Profile
+          </a>
+          <hr class="navbar-divider">
+          <a class="navbar-item" do="signout">
+            Sign out
           </a>
         </div>
       </div>
+      {{^}}
+      <div class="navbar-item">
+        <div class="buttons">
+          <a class="button is-info" do="signin">
+            Sign in with
+            <svg width="20" height="20" class="tanuki-logo" viewBox="0 0 36 36">
+              <path class="tanuki-shape tanuki-left-ear" fill="#e24329"
+                d="M2 14l9.38 9v-9l-4-12.28c-.205-.632-1.176-.632-1.38 0z"></path>
+              <path class="tanuki-shape tanuki-right-ear" fill="#e24329"
+                d="M34 14l-9.38 9v-9l4-12.28c.205-.632 1.176-.632 1.38 0z"></path>
+              <path class="tanuki-shape tanuki-nose" fill="#e24329" d="M18,34.38 3,14 33,14 Z"></path>
+              <path class="tanuki-shape tanuki-left-eye" fill="#fc6d26" d="M18,34.38 11.38,14 2,14 6,25Z"></path>
+              <path class="tanuki-shape tanuki-right-eye" fill="#fc6d26" d="M18,34.38 24.62,14 34,14 30,25Z"></path>
+              <path class="tanuki-shape tanuki-left-cheek" fill="#fca326"
+                d="M2 14L.1 20.16c-.18.565 0 1.2.5 1.56l17.42 12.66z"></path>
+              <path class="tanuki-shape tanuki-right-cheek" fill="#fca326"
+                d="M34 14l1.9 6.16c.18.565 0 1.2-.5 1.56L18 34.38z"></path>
+            </svg>
+          </a>
+        </div>
+      </div>
+      {{/if}}
+
     </div>
   </div>
 </nav>
@@ -64,8 +121,41 @@
     </div>
   </div>
 </div>
-<form id="preview-form" action="/code/preview" method="post" target="preview-iframe">
-  <input type="text" name="html">
-  <input type="text" name="css">
-  <input type="text" name="js">
+<div class="modal" id="settings-modal">
+  <div class="modal-background"></div>
+  <div class="modal-content">
+    <div class="box">
+      <div class="box-content">
+        <div class="field">
+          <label class="label">Title</label>
+          <div class="control">
+            <input name="setting-title" class="input" type="text" placeholder="Code Title">
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Javascript Resources</label>
+          <div class="control">
+            <textarea rows="3" class="textarea" name="setting-jsLinks" placeholder="Javascript"></textarea>
+          </div>
+        </div>
+        <div class="field">
+          <label class="label">Css Resources</label>
+          <div class="control">
+            <textarea rows="3" class="textarea" name="setting-cssLinks" placeholder="Css"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button class="modal-close is-large" aria-label="close"></button>
+</div>
+<form id="preview-form" action="/preview" method="post" target="preview-iframe">
+  <input type="text" name="id" value="{{code.id}}">
+  <input type="text" name="title" value="{{code.title}}">
+  <textarea name="jsLinks">{{code.jsLinks}}</textarea>
+  <textarea name="cssLinks">{{code.cssLinks}}</textarea>
+  <textarea name="html">{{code.html}}</textarea>
+  <textarea name="css">{{code.css}}</textarea>
+  <textarea name="js">{{code.js}}</textarea>
 </form>

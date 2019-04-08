@@ -16,11 +16,17 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 
-app.engine('hbs', exphbs({
+var hbs = exphbs.create({
   layoutsDir: 'views',
   defaultLayout: 'layout',
   extname: '.hbs'
-}));
+})
+
+hbs.handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
+  return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
+});
+
+app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 
 app.use(session({
@@ -37,8 +43,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/user', userRouter);
-app.use('/code', codeRouter);
+app.use('/api/user', userRouter);
+app.use('/api/code', codeRouter);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
