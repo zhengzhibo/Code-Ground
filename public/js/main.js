@@ -136,6 +136,7 @@ require(["vs/editor/editor.main"], function () {
     language: "html",
     theme: "vs-dark",
     minimap: { enabled: false },
+    automaticLayout: true,
     contextmenu: false
   });
   editor.jsEditor = monaco.editor.create(document.getElementById("js-container"), {
@@ -143,6 +144,7 @@ require(["vs/editor/editor.main"], function () {
     theme: "vs-dark",
     language: "javascript",
     minimap: { enabled: false },
+    automaticLayout: true,
     contextmenu: false
   });
   editor.cssEditor = monaco.editor.create(document.getElementById("css-container"), {
@@ -150,6 +152,7 @@ require(["vs/editor/editor.main"], function () {
     theme: "vs-dark",
     language: "css",
     minimap: { enabled: false },
+    automaticLayout: true,
     contextmenu: false
   });
   
