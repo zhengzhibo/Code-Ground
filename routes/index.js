@@ -1,39 +1,51 @@
 var express = require('express');
 var router = express.Router();
 var createError = require('http-errors');
-const config = require('../config');
+const common = require('../common');
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  var data = {title: 'Code Ground', userInfo: req.session.userInfo};
-  res.render('index', data);
-});
-
-router.get('/login', function(req, res, next) {
   var userInfo = req.session.userInfo;
-  if (!userInfo) {
-    res.redirect(`${config.gitlab.host}/oauth/authorize?client_id=${config.gitlab.appId}&redirect_uri=${config.gitlab.redirectUri}&response_type=code&scope=read_user`);
-  } else {
-    res.render('logged')
-  }
+  var data = {title: 'Code Ground', userInfo, canSave: true};
+  res.render('index', data);
 });
 
 router.get('/code/:id', function(req, res, next) {
   var id = req.params.id;
+  var userInfo = req.session.userInfo;
+
   let code = db.get('codes')
                .find({id}).value();
-
   if (code) {
-    var data = {title: 'Code Ground', userInfo: req.session.userInfo, code};
+    var canSave = common.codeBelongsToCurrenUser(req, code);
+    var data = {title: 'Code Ground', userInfo, code, canSave};
     res.render('index', data);
   } else {
     next(createError(404))
   }
 });
 
+router.get('/login', function(req, res, next) {
+  var userInfo = req.session.userInfo;
+  if (!userInfo) {
+    res.redirect(`${common.gitlab.host}/oauth/authorize?client_id=${common.gitlab.appId}&redirect_uri=${common.gitlab.redirectUri}&response_type=code&scope=read_user`);
+  } else {
+    res.render('logged')
+  }
+});
+
 router.post('/preview', (req, res) => {
-  let {js, css, html} = req.body;
-  res.send(`<html><script>${js}</script><style>${css}</style><body>${html}</body></html>`)
+  var {jsLinks, cssLinks} = req.body;
+  var jsAry = [];
+  var cssAry = [];
+  if (jsLinks) {
+    jsAry = jsLinks.split(/\r\n/)
+  }
+  if (cssAry) {
+    cssAry = cssLinks.split(/\r\n/)
+  }
+console.log(jsAry, cssAry)
+  res.render('preview', {...req.body, layout: false, jsAry, cssAry})
 });
 
 module.exports = router;

@@ -31,26 +31,54 @@ var editor = {
       })
   },
   run: function () {
+    document.getElementsByName('title')[0].value = document.getElementsByName('setting-title')[0].value
+    document.getElementsByName('cssLinks')[0].value = document.getElementsByName('setting-cssLinks')[0].value
+    document.getElementsByName('jsLinks')[0].value = document.getElementsByName('setting-jsLinks')[0].value
+
     document.getElementsByName('js')[0].value = editor.jsEditor.getValue();
     document.getElementsByName('css')[0].value = editor.cssEditor.getValue();
     document.getElementsByName('html')[0].value = editor.htmlEditor.getValue();
     document.getElementById('preview-form').submit();
   },
-  save: function () {
-    axios.post('/api/code/', {
-      js: editor.jsEditor.getValue(),
-      css: editor.cssEditor.getValue(),
-      html: editor.htmlEditor.getValue(),
-    })
-      .then(function (res) {
-        toast('success!');
-        setTimeout(function() {
-          window.location.replace('/code/' + res.data.id)
-        }, 1000)
+  save: function (fork) {
+    var id = document.getElementsByName('id')[0].value;
+    if (id && !fork) {
+      axios.put('/api/code/' + id, {
+        title: document.getElementsByName('setting-title')[0].value,
+        cssLinks: document.getElementsByName('setting-cssLinks')[0].value,
+        jsLinks: document.getElementsByName('setting-jsLinks')[0].value,
+        js: editor.jsEditor.getValue(),
+        css: editor.cssEditor.getValue(),
+        html: editor.htmlEditor.getValue(),
       })
-      .catch(function (error) {
-        console.log(error)
+        .then(function (res) {
+          toast('success!');
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    } else {
+      axios.post('/api/code/', {
+        title: document.getElementsByName('setting-title')[0].value,
+        cssLinks: document.getElementsByName('setting-cssLinks')[0].value,
+        jsLinks: document.getElementsByName('setting-jsLinks')[0].value,
+        js: editor.jsEditor.getValue(),
+        css: editor.cssEditor.getValue(),
+        html: editor.htmlEditor.getValue(),
       })
+        .then(function (res) {
+          toast('success!');
+          setTimeout(function() {
+            window.location.href ='/code/' + res.data.id;
+          }, 1000)
+        })
+        .catch(function (error) {
+          console.log(error)
+        })
+    }
+  },
+  fork: function() {
+    editor.save(true);
   },
   settings: function () {
     rootEl.classList.add('is-clipped');
@@ -124,6 +152,10 @@ require(["vs/editor/editor.main"], function () {
     minimap: { enabled: false },
     contextmenu: false
   });
+  
+  if (document.getElementsByName('id')[0].value) {
+    editor.run();
+  }
 });
 
 
@@ -139,6 +171,10 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   }
+
+  document.getElementsByName('setting-title')[0].value = document.getElementsByName('title')[0].value
+  document.getElementsByName('setting-cssLinks')[0].value = document.getElementsByName('cssLinks')[0].value
+  document.getElementsByName('setting-jsLinks')[0].value = document.getElementsByName('jsLinks')[0].value
 });
 
 var clickables = getAll('[do]')

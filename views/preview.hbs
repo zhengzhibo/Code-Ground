@@ -11,7 +11,13 @@
       background: #fff;
     }
   </style>
-
+  
+  {{#each jsAry}}
+    <script src="{{{this}}}"></script>
+  {{/each}}
+  {{#each cssAry}}
+    <link rel="stylesheet" href="{{{this}}}">
+  {{/each}}
   <style type="text/css">
     {{{css}}}
   </style>
