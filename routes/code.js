@@ -1,5 +1,7 @@
 var express = require('express');
 var router = express.Router();
+var common = require('../common')
+var createError = require('http-errors');
 
 const generate = require('nanoid/generate');
 const alphabet = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
@@ -9,12 +11,22 @@ function newId() {
 }
 
 router.post('/', (req, res) => {
+  var userInfo = req.session.userInfo;
+  var id = newId();
   var code = {
     ...req.body,
-    author: req.session.userInfo ? req.session.userInfo.meta.uid : '',
+    author: userInfo ? userInfo.meta.uid : '',
     dateOfCreate: new Date().getTime(),
-    id: newId()
+    id
   };
+
+  if (!userInfo) {
+    if (!req.session.ownAnonymousCode) {
+      req.session.ownAnonymousCode = [];
+    }
+
+    req.session.ownAnonymousCode.push(id)
+  }
 
   db.get('codes')
   .push(code)
@@ -23,13 +35,22 @@ router.post('/', (req, res) => {
   .then(code => res.send(code));
 });
 
-router.put('/:id', (req, res) => {
+router.put('/:id', (req, res, next) => {
   let id = req.params.id;
-  db.get('codes')
+  let code = db.get('codes')
   .find({id})
-  .assign(req.body)
-  .write()
-  .then(code => res.send(code))
+  .value();
+
+  if (common.codeBelongsToCurrenUser(req, code)) {
+    db.get('codes')
+    .find({id})
+    .assign(req.body)
+    .assign({author: req.session.userInfo ? req.session.userInfo.meta.uid : '',})
+    .write()
+    .then(code => res.send(code))
+  } else {
+    next(createError(401))
+  }
 });
 
 router.get('/', function(req, res, next) {
