@@ -11,7 +11,7 @@ function newId() {
 router.post('/', (req, res) => {
   var code = {
     ...req.body,
-    owner: req.cookies.userInfo ? req.cookies.userInfo.name : '',
+    author: req.session.userInfo ? req.session.userInfo.meta.uid : '',
     dateOfCreate: new Date().getTime(),
     id: newId()
   };
