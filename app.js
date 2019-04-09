@@ -32,7 +32,10 @@ app.set('view engine', 'hbs');
 app.use(session({
   secret: 'oppps',
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 2 * 60 * 60 * 1000
+  }
 }))
 
 
