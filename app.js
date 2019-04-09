@@ -39,7 +39,9 @@ app.use(session({
 }))
 
 
-app.use(logger('dev'));
+app.use(logger('dev', {
+  skip: function (req, res) { return res.statusCode < 400 }
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
