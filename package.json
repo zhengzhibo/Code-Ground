@@ -15,7 +15,7 @@
     "delay": "1000"
   },
   "scripts": {
-    "start": "node app",
+    "start": "NODE_ENV=production node app",
     "debug": "nodemon app"
   },
   "dependencies": {

@@ -32,11 +32,16 @@ app.set('view engine', 'hbs');
 app.use(session({
   secret: 'oppps',
   resave: false,
-  saveUninitialized: true
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 2 * 60 * 60 * 1000
+  }
 }))
 
 
-app.use(logger('dev'));
+app.use(logger('dev', {
+  skip: function (req, res) { return res.statusCode < 400 }
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
