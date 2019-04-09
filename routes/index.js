@@ -44,7 +44,6 @@ router.post('/preview', (req, res) => {
   if (cssAry) {
     cssAry = cssLinks.split(/\r\n/)
   }
-console.log(jsAry, cssAry)
   res.render('preview', {...req.body, layout: false, jsAry, cssAry})
 });
 
