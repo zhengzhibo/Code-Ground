@@ -47,4 +47,22 @@ router.post('/preview', (req, res) => {
   res.render('preview', {...req.body, layout: false, jsAry, cssAry})
 });
 
+router.get('/preview/:id', (req, res) => {
+  let id = req.params.id;
+  var code = db.get('codes')
+  .find({id})
+  .value();
+
+  var {jsLinks, cssLinks} = code;
+  var jsAry = [];
+  var cssAry = [];
+  if (jsLinks) {
+    jsAry = jsLinks.split(/\r\n/)
+  }
+  if (cssAry) {
+    cssAry = cssLinks.split(/\r\n/)
+  }
+  res.render('preview', {...code, layout: false, jsAry, cssAry})
+});
+
 module.exports = router;
