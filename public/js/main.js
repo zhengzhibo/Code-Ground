@@ -15,7 +15,7 @@ Split(["#css-container", "#preview-container"], {
   cursor: "row-resize"
 });
 
-require.config({ paths: { vs: "/monaco-editor/min/vs" } });
+require.config({ paths: { vs: "https://cdn.jsdelivr.net/npm/monaco-editor@0.16.2/min/vs" } });
 
 var editor = {
   signin: function () {
