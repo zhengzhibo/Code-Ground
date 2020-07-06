@@ -3,11 +3,13 @@ var router = express.Router();
 var common = require('../common')
 var createError = require('http-errors');
 
-const generate = require('nanoid/generate');
+var { customAlphabet } = require('nanoid/async');
 const alphabet = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+const nanoid = customAlphabet(alphabet, 10)
 
-function newId() {
-  return generate(alphabet, 8);
+
+async function newId () {
+  return await nanoid(alphabet, 8);
 }
 
 router.post('/', (req, res) => {
