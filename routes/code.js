@@ -9,12 +9,12 @@ const nanoid = customAlphabet(alphabet, 10)
 
 
 async function newId () {
-  return await nanoid(alphabet, 8);
+  return await nanoid();
 }
 
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   var userInfo = req.session.userInfo;
-  var id = newId();
+  var id = await newId();
   var code = {
     ...req.body,
     author: userInfo ? userInfo.meta.uid : '',
