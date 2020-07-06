@@ -1,20 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="renderer" content="webkit">
+    <meta name="application-name" content="Code Ground">
+    <meta name="msapplication-TileColor" content="#2b5797">
+    <meta name="msapplication-config" content="icons/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="apple-mobile-web-app-title" content="Code Ground">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
+    <link rel="manifest" href="icons/site.webmanifest">
+    <link rel="mask-icon" href="icons/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="shortcut icon" href="icons/favicon.ico">
+
     <title>{{title}}</title>
     <link rel="stylesheet" href="/css/bulma.css">
-    <link rel="stylesheet" href="/css/main.css">
     <link rel="stylesheet" href="/font/iconfont.css">
+    <link rel="stylesheet" href="/css/main.css">
+
     <script src="/js/split.js"></script>
     <script src="/js/bulma-toast.min.js"></script>
     <script src="/js/axios.min.js"></script>
-    <script src="/monaco-editor/min/vs/loader.js"></script>
-</head>
-<body>
+    <script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.16.2/min/vs/loader.js"></script>
+  </head>
+
+  <body>
     {{{body}}}
-</body>
-<script src="/js/main.js"></script>
+  </body>
+  <script src="/js/main.js"></script>
 </html>

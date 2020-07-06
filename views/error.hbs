@@ -1,19 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>ERROR!</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="/css/bulma.css">
+  <title>404 Not Found | Code Ground</title>
+  <style>
+    {{#if production}}
+    pre {
+      display: none;
+    }
+    {{/if}}
+    .cls-1 {
+      fill: #ff4f68;
+    }
+
+    .cls-2 {
+      fill: #0084ff;
+    }
+
+    .left-eye {
+      animation: shake 1s infinite;
+    }
+
+    .right-eye {
+      animation: shake 0.9s infinite;
+    }
+
+    @keyframes shake {
+      0% {
+        transform: translate(1px, 1px) rotate(0deg);
+      }
+
+      10% {
+        transform: translate(-1px, -2px) rotate(-1deg);
+      }
+    }
+
+    .main-container {
+      padding-top: 6rem
+    }
+    .message-container h1 {
+      font-size: 7rem;
+    }
+  </style>
 </head>
+
 <body>
-    <h1>{{message}}</h1>
-    <h2>{{error.status}}</h2>
-    <a href="/">GO BACK HOME</a>
-    <pre>
-        {{#unless production}}
-            {{error.stack}}
-        {{/unless}}
-    </pre>
+  <section class="section main-container">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-5 is-offset-1">
+          <svg id="404-icon" data-name="404-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1515 796.87"> <path class="cls-1" d="M602.12,750.06,746,669.33a25,25,0,0,1,34,9.57h0a25,25,0,0,1-9.57,34l-143.9,80.73a25,25,0,0,1-34-9.57h0A25,25,0,0,1,602.12,750.06Z" /> <path class="cls-1" d="M923.05,784.1h0a25,25,0,0,1-34,9.57l-143.9-80.73a25,25,0,0,1-9.57-34h0a25,25,0,0,1,34-9.57l143.9,80.73A25,25,0,0,1,923.05,784.1Z" /> <path class="cls-2" d="M0,350.93V63.13a25,25,0,0,1,25-25h0a25,25,0,0,1,25,25v287.8a25,25,0,0,1-25,25h0A25,25,0,0,1,0,350.93Z" /> <path class="cls-2" d="M75.1,376.5H362.9a25,25,0,0,1,25,25h0a25,25,0,0,1-25,25H75.1a25,25,0,0,1-25-25h0A25,25,0,0,1,75.1,376.5Z" /> <path class="cls-2" d="M388,350.93V63.13a25,25,0,0,1,25-25h0a25,25,0,0,1,25,25v287.8a25,25,0,0,1-25,25h0A25,25,0,0,1,388,350.93Z" /> <path class="cls-2" d="M388,738.93V451.13a25,25,0,0,1,25-25h0a25,25,0,0,1,25,25v287.8a25,25,0,0,1-25,25h0A25,25,0,0,1,388,738.93Z" /> <path class="cls-2" d="M538,363.43V75.63a25,25,0,0,1,25-25h0a25,25,0,0,1,25,25v287.8a25,25,0,0,1-25,25h0A25,25,0,0,1,538,363.43Z" /> <path class="cls-2 left-eye" d="M667.61,613.74V556.32a18.69,18.69,0,0,1,18.69-18.69h0A18.69,18.69,0,0,1,705,556.32v57.42a18.69,18.69,0,0,1-18.69,18.69h0A18.69,18.69,0,0,1,667.61,613.74Z" /> <path class="cls-2 right-eye" d="M810.61,613.74V556.32a18.69,18.69,0,0,1,18.69-18.69h0A18.69,18.69,0,0,1,848,556.32v57.42a18.69,18.69,0,0,1-18.69,18.69h0A18.69,18.69,0,0,1,810.61,613.74Z" /> <path class="cls-2" d="M613.1,0H900.9a25,25,0,0,1,25,25h0a25,25,0,0,1-25,25H613.1a25,25,0,0,1-25-25h0A25,25,0,0,1,613.1,0Z" /> <path class="cls-2" d="M926,363.43V75.63a25,25,0,0,1,25-25h0a25,25,0,0,1,25,25v287.8a25,25,0,0,1-25,25h0A25,25,0,0,1,926,363.43Z" /> <path class="cls-2" d="M926,728.43V440.63a25,25,0,0,1,25-25h0a25,25,0,0,1,25,25v287.8a25,25,0,0,1-25,25h0A25,25,0,0,1,926,728.43Z" /> <path class="cls-2" d="M539,728.43V440.63a25,25,0,0,1,25-25h0a25,25,0,0,1,25,25v287.8a25,25,0,0,1-25,25h0A25,25,0,0,1,539,728.43Z" /> <path class="cls-2" d="M1077,350.93V63.13a25,25,0,0,1,25-25h0a25,25,0,0,1,25,25v287.8a25,25,0,0,1-25,25h0A25,25,0,0,1,1077,350.93Z" /> <path class="cls-2" d="M1152.1,376.5h287.8a25,25,0,0,1,25,25h0a25,25,0,0,1-25,25H1152.1a25,25,0,0,1-25-25h0A25,25,0,0,1,1152.1,376.5Z" /> <path class="cls-2" d="M1465,350.93V63.13a25,25,0,0,1,25-25h0a25,25,0,0,1,25,25v287.8a25,25,0,0,1-25,25h0A25,25,0,0,1,1465,350.93Z" /> <path class="cls-2" d="M1465,738.93V451.13a25,25,0,0,1,25-25h0a25,25,0,0,1,25,25v287.8a25,25,0,0,1-25,25h0A25,25,0,0,1,1465,738.93Z" /> </svg>
+        </div>
+        <div class="column is-offset-1">
+          <div class="message-container">
+            <h1>Oops!</h1>
+            <h2>Oops! We can't find this page. It may have been moved.</h2>
+            <a href="/">Back to home</a>
+          </div>
+        </div>
+      </div>
+      <pre>
+        {{message}}
+        {{error.status}}
+        {{error.stack}}
+      </pre>
+    </div>
+  </section>
 </body>
+
 </html>

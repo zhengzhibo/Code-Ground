@@ -15,7 +15,7 @@ Split(["#css-container", "#preview-container"], {
   cursor: "row-resize"
 });
 
-require.config({ paths: { vs: "/monaco-editor/min/vs" } });
+require.config({ paths: { vs: "https://cdn.jsdelivr.net/npm/monaco-editor@0.16.2/min/vs" } });
 
 var editor = {
   signin: function () {
@@ -178,6 +178,21 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementsByName('setting-title')[0].value = document.getElementsByName('title')[0].value
   document.getElementsByName('setting-cssLinks')[0].value = document.getElementsByName('cssLinks')[0].value
   document.getElementsByName('setting-jsLinks')[0].value = document.getElementsByName('jsLinks')[0].value
+
+  getAll('.command')[0].addEventListener('keydown', function(event) {
+    if (event.keyCode == 13 && event.target.value.trim() !== '') {
+      let action = event.target.value.trim();
+      if(action[0] == '>') {
+        //run command
+        var commandFunc = editor[action.slice(1)];
+        if (typeof commandFunc == 'function') {
+          commandFunc();
+        }
+      } else if (action[0] == '@') {
+        //at user
+      }
+    }
+  })
 });
 
 var clickables = getAll('[do]')
