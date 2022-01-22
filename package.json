@@ -28,7 +28,7 @@
     "http-errors": "~1.8.0",
     "lowdb": "^1.0.0",
     "morgan": "~1.10.0",
-    "nanoid": "^3.1.10",
+    "nanoid": "^3.1.31",
     "passport": "^0.4.1"
   },
   "devDependencies": {
